@@ -13,7 +13,7 @@ dotenv.config({path:'./env/.env'});
 //4 - el directorio public
 app.use('/resources',express.static('public'));
 app.use('/resources',express.static(__dirname+'/public'));
-console.log(__dirname)
+
 
 //5 . establecemos el motor de plantillas
 app.set('view engine','ejs');
@@ -29,8 +29,18 @@ app.use(session({
     saveUninitialized:true
 }));
 
+//8 - Invocamos al modulo de conexion de la BD
+const connection = require('./database/db')
+
+//9 - Estableciendo las rutas
 app.get('/',(req , res)=>{
-    res.send('Hola mundo');
+    res.render('index', {msg:'Esto es un mensaje desde node'});
+})
+app.get('/login',(req , res)=>{
+    res.render('login');
+})
+app.get('/register',(req , res)=>{
+    res.render('register');
 })
 
 app.listen(3000,(req, res)=>{
